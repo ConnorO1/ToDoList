@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Heading from "./Heading";
-
+import List from "./toDoItem";
 
 
 function App() {
@@ -21,6 +21,14 @@ function App() {
     setInputText("");
   };
 
+  function deleteItem(id) {
+    setItems(prev => {
+      return prev.filter((item, index) => {
+        return index != id;
+      });
+    })
+  };
+
   return (
     <div className="container">
       <Heading />
@@ -34,7 +42,18 @@ function App() {
 
       <div>
         <ul>
-        {items.map(item => <li>{item}</li>)}
+        {items.map((item, i)=> 
+        <List 
+        // can get acess to array index through second parameter
+        key={i}
+        // we dont actually get access to key so need to make id
+        id={i}
+        contents={item}
+        // can also call a funciton
+        // now the component has access to this function and we can 
+        // call it when we want
+        onChecked={deleteItem}
+        />)}
         </ul>
       </div>
 
